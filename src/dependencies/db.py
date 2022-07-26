@@ -1,6 +1,5 @@
 import os
 import configparser
-import psycopg2
 import sqlalchemy
 from sqlalchemy.exc import DontWrapMixin
 
@@ -18,8 +17,11 @@ database = config.get('POSTGRES', 'POSTGRES_DB')
 
 # connect to postgres database
 def connect():
+    """
+    Connect to the PostgreSQL database
+    """
     try:
-        engine = create_engine(f'postgresql://student:student@localhost:5432/{database}')
+        engine = create_engine(f'postgresql://{user}:{password}@localhost:5432/{database}')
         print("Database connection established successfully")
         return engine
     except (Exception, sqlalchemy.exc.DatabaseError) as error:
