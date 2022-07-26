@@ -1,0 +1,7 @@
+*.cfg
+sql_queries.py
+create_tables.py
+test.ipynb
+venv/*
+.idea/*
+*/__pycache__/*
