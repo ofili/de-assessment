@@ -30,25 +30,25 @@ def create_insert_table():
     with engine.connect() as conn:
         # continents table
         df_continent.head(n=0).to_sql('continents', con=conn,
-                                      if_exists='append', index=True)
+                                      if_exists='replace', index=True)
         df_continent.to_sql('continents', con=conn,
                             if_exists='append', index=True)
 
         # languages table
         df_lang.head(n=0).to_sql('languages', con=conn,
-                                 if_exists='append', index=True)
+                                 if_exists='replace', index=True)
         df_lang.to_sql('languages', con=conn,
                        if_exists='append', index=True)
 
         # countries table
         df_country.head(n=0).to_sql('countries', con=conn,
-                                    if_exists='append', index=True)
+                                    if_exists='replace', index=True)
         df_country.to_sql('countries', con=conn,
                           if_exists='append', index=True)
 
         # countries2to3 table
         df_country_code.head(n=0).to_sql('countries2to3', con=conn,
-                                         if_exists='append', index=True)
+                                         if_exists='replace', index=True)
         df_country_code.to_sql('countries2to3', con=conn,
                                if_exists='append', index=True)
         print("Tables created successfully")

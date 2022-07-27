@@ -26,3 +26,6 @@ def connect():
         return engine
     except (Exception, sqlalchemy.exc.DatabaseError) as error:
         print(f"Error: Unable to connect to the database {error}")
+
+if __name__ == '__main__':
+    connect()
