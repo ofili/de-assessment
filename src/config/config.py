@@ -1,3 +1,4 @@
+import os 
 from functools import lru_cache
 
 from pydantic import BaseSettings
@@ -9,8 +10,8 @@ class Settings(BaseSettings):
     """
     env_name: str = "DE Assessment"
     
-    # db_url: str = os.environ.get("DB_URL")
-    db_url = "postgresql://student:student@localhost:5432/decagon_db"
+    db_url: str = os.environ.get("DB_URL")
+    
 
     class Config:
         """
