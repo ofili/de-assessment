@@ -1,7 +1,5 @@
 *.cfg
-sql_queries.py
-create_tables.py
-test.ipynb
+.env
 venv/*
 .idea/*
 */__pycache__/*
