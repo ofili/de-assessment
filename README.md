@@ -1,46 +1,51 @@
 # Simle ETL workflow
 ---
 
-The workflow brings the data into an PostgreSQL database.
+The workflow brings the data into an PostgresSQL database.
 
 ## Approaching the workflow
 The workflow requires the following steps:
-1. Create the database and the tables.
-2. Load the data into the tables.
-3. Generate the reports.
+1. Create the database.
+2. Create the tables. Four tables are created in the database: `continents`, `countries`, `cities`, and `airports`.	
+3. Load the data into the tables.
+4. Generate the reports.
 
-### Creating the database and the tables
-The database with the following SQL commands:
+### Creating the database
+The database is created using the `psql` with the following command:
 
-```sql
-CREATE DATABASE IF NOT EXISTS database_name;
-USE database_name;
 ```
-The tables are created in the database with pandas.
-
-```sql
-df.head(n=0).to_sql(table_name, con=engine, if_exists='replace', index=True)
-```
-This will create the table with the appropriate schema and columns. You can also specify the schema and columns in the following way:
-
-```sql
-df.head(n=0).to_sql(table_name, con=engine, if_exists='replace', index=True, schema='schema_name', dtype={'column_name': 'data_type'})
+psql -U user -d password -c "CREATE DATABASE dbname;"
 ```
 
-### Loading the data into the tables
-The data is loaded into the tables with pandas.
+### Creating the tables
+The tables are created by describing the database tables and then by defining classes which will be mapped to those tables.
 
 ```sql
-df.to_sql(table_name, con=engine, if_exists='replace', index=True)
+class Class(Base):
+    __tablename__ = 'table_name'
+    
+    id = Column(Integer, primary_key = True)
+    col1 = Column(2String)
+    col2 = Column(String)
+    col3 = Column(String)
+```
+Finally, pass the classes to the `Base.metadata.create_all` method.
+
+### Load the tables
+The json files are parsed and the data is loaded into the tables.
+
+```python
+with open('data/continents.json') as f:
+    continents = json.load(f)
+    for continent in continents:
+        session.add(Continent(**continent))
+
+The data is loaded into the tables by using the `session.add` method.
+
+```sql
+session.add(Class(col1 = 'value1', col2 = 'value2', col3 = 'value3'))
 ```
 
-The data is loaded into a pandas dataframe. The dataframe is then converted to a PostgreSQL table. 
-The following steps are performed on an dataframe database object:
-1. Convert the dataframe to a PostgreSQL table.
-2. Create a database connection.
-3. Create a cursor.
-4. Write the dataframe to the database.
-5. Close the database connection.
 
 
 ### Generating the reports
